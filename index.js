@@ -39,6 +39,7 @@ app.post('/play-video', function(req, res) {
 	console.log('Attempting to play video...')
 	faye_server.getClient().publish('/play-video', {videoID: req.body.videoID})
 })
-// app.listen(3000, function () {
-//   console.log('Example app listening on port 3000!')
-// })
+
+app.listen(process.env.PORT || 5000, function () {
+  console.log('Example app listening on port 5000!')
+})
