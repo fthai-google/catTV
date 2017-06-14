@@ -1,0 +1,93 @@
+<html>
+<head>
+  <title>PawsomeTV</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="assets/js/index.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div id="title-screen">
+    <img src="assets/img/pawprint.png">
+  </div>
+  <div id="player"></div>
+  <div id="new-comment">
+    <div id="new-comment-screen"></div>
+    <div id="new-comment-text">Here's a nift comment</div>
+  </div>
+    <script type="text/javascript" 
+        src="http://localhost:8089/faye/client.js">
+        </script>
+    <script>
+      // 2. This code loads the IFrame Player API code asynchronously.
+      $('#title-screen img').animate({opacity: 1}, 2000);
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+      var player;
+      function onYouTubeIframeAPIReady() {
+          player = new YT.Player('player', {
+          height: '100%',
+          width: '100%',
+          // videoId: 'M7lc1UVf-VE',
+          playerVars: { 'autoplay': 1, 'controls': 0, 'showinfo': 0, 'modestbranding': 1, 'vq': 'hd720'},
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+      }
+
+      // 4. The API will call this function when the video player is ready.
+      function onPlayerReady(event) {
+        player.setPlaybackQuality('hd720');
+        // event.target.playVideo();
+      }
+
+      // 5. The API calls this function when the player's state changes.
+      //    The function indicates that when playing a video (state=1),
+      //    the player should play for six seconds and then stop.
+      var done = false;
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+          if ($("#title-screen").css('display') == 'block') {
+            $('#title-screen').animate({opacity: 0}, 250);
+            $('#title-screen').css('display', 'none').css('z-index', -1);
+          }
+        }
+      }
+      function stopVideo() {
+        player.stopVideo();
+      }
+
+      var timeout;
+
+      function newComment (comment) {
+        window.clearTimeout(timeout);
+        $('#new-comment-text').text(comment);
+        $('#new-comment').animate({opacity: 1}, 250);
+        timeout = window.setTimeout(function() {
+          $('#new-comment').animate({opacity: 0}, 250)
+        }, 1000);
+      }
+
+      var faye_client = new Faye.Client('http://127.0.0.1:8089/faye');
+      var faye_comments = faye_client.subscribe('/new-comment', function(message) {
+        var comment = message.comment;
+        newComment(comment);
+        
+      });
+      var faye_video = faye_client.subscribe('/play-video', function(message) {
+        
+        var videoID = message.videoID;
+        stopVideo();
+        player.loadVideoById(videoID);
+      });
+    </script>
+</body>
+</html>

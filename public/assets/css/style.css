@@ -1,0 +1,51 @@
+html, body {
+	width: 100%;
+	height: 100%;
+	font-family: 'Avenir', sans-serif;
+	margin: 0px !important;
+}
+.html5-video-player a {
+	display: none !important;
+}
+#new-comment {
+	position: fixed;
+	z-index: 1;
+	opacity: 0;
+	max-width: 30%;
+	bottom: 5%;
+	right: 5%;
+}
+#new-comment-screen {
+	position: absolute;
+	background: white;
+	opacity: 0.7;
+	border-radius: 2px;
+	width: 100%;
+	height: 100%;
+}
+#new-comment-text {
+	padding: 10px;
+	font-size: 18px;
+	color: black;
+	text-align: left;
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+#title-screen {
+	position: fixed;
+	display: block;
+	width: 100%;
+	height: 100%;
+	background: black;
+	line-height: 100%;
+	text-align: center;
+	font-size: 24px;
+}
+#title-screen img {
+	height: 30%;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	opacity: 0;
+}
