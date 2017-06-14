@@ -13,7 +13,7 @@ var server = http.createServer(function(request, response) {
 });
 
 faye_server.attach(server);
-server.listen(8089);
+server.listen(process.env.PORT || 8089);
 console.log('Finished firing up faye server')
 const app = express()
 
