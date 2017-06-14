@@ -5,7 +5,7 @@ var bodyParser = require('body-parser')
 var faye = require('faye')
 var http = require('http')
 var faye_server = new faye.NodeAdapter({mount: '/faye', timeout: 45});
-console.log('Firing up faye server...')
+
 // Handle non-Bayeux requests
 var server = http.createServer(function(request, response) {
   response.writeHead(200, {'Content-Type': 'text/plain'});
@@ -14,7 +14,7 @@ var server = http.createServer(function(request, response) {
 
 faye_server.attach(server);
 server.listen(8089);
-
+console.log('Finished firing up faye server')
 const app = express()
 
  
@@ -39,6 +39,6 @@ app.post('/play-video', function(req, res) {
 	console.log('Attempting to play video...')
 	faye_server.getClient().publish('/play-video', {videoID: req.body.videoID})
 })
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!')
-})
+// app.listen(3000, function () {
+//   console.log('Example app listening on port 3000!')
+// })
