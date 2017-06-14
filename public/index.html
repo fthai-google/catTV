@@ -74,7 +74,7 @@
         $('#new-comment').animate({opacity: 1}, 250);
         timeout = window.setTimeout(function() {
           $('#new-comment').animate({opacity: 0}, 250)
-        }, 1000);
+        }, 1500);
       }
       var socket = io();
       socket.on('new-comment', function(comment) {
