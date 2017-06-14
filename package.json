@@ -4,8 +4,10 @@
   "description": "TV side of our pawsome cats application",
   "main": "index.js",
   "scripts": {
-    "start": "node v6.10.3",
     "test": "console.log('test command done!');"
+  },
+  "engines": {
+    "node": "6.10.3"
   },
   "author": "Frances Thai",
   "license": "ISC",
