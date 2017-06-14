@@ -4,6 +4,7 @@
   "description": "TV side of our pawsome cats application",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "console.log('test command done!');"
   },
   "engines": {
